@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomTabView">
+        <attr name="ctvText" format="string"/>
+        <attr name="ctvTextSize" format="dimension"/>
+        <attr name="ctvTextOriginColor" format="color"/>
+        <attr name="ctvTextChangeColor" format="color"/>
+        <attr name="ctvProgress" format="float"/>
+        <attr name="ctvDirection" format="integer"/>
+    </declare-styleable>
+</resources>
