@@ -144,20 +144,18 @@ public class CustomTabView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int r = (int) (mProgress * mTextWidth + mTextStartX);
-        int t = (int) (mProgress * mTextHeight + mTextStartY);
         if (mDirection == DIRECTION_LEFT) {
-            drawChangeLeft(canvas, r);
-            drawOriginLeft(canvas, r);
+            drawChangeLeft(canvas);
+            drawOriginLeft(canvas);
         } else if (mDirection == DIRECTION_RIGHT) {
-            drawOriginRight(canvas, r);
-            drawChangeRight(canvas, r);
+            drawOriginRight(canvas);
+            drawChangeRight(canvas);
         } else if (mDirection == DIRECTION_TOP) {
-            drawOriginTop(canvas, t);
-            drawChangeTop(canvas, t);
+            drawOriginTop(canvas);
+            drawChangeTop(canvas);
         } else {
-            drawOriginBottom(canvas, t);
-            drawChangeBottom(canvas, t);
+            drawOriginBottom(canvas);
+            drawChangeBottom(canvas);
         }
     }
 
@@ -193,44 +191,44 @@ public class CustomTabView extends View {
         mDirection = direction;
     }
 
-    private void drawChangeLeft(Canvas canvas, int r) {
+    private void drawChangeLeft(Canvas canvas) {
         drawTextHor(canvas, mTextChangeColor, mTextStartX,
                 (int) (mTextStartX + mProgress * mTextWidth));
     }
 
-    private void drawOriginLeft(Canvas canvas, int r) {
+    private void drawOriginLeft(Canvas canvas) {
         drawTextHor(canvas, mTextOriginColor, (int) (mTextStartX + mProgress
                 * mTextWidth), mTextStartX + mTextWidth);
     }
 
-    private void drawChangeRight(Canvas canvas, int r) {
+    private void drawChangeRight(Canvas canvas) {
         drawTextHor(canvas, mTextChangeColor,
                 (int) (mTextStartX + (1 - mProgress) * mTextWidth), mTextStartX
                         + mTextWidth);
     }
 
-    private void drawOriginRight(Canvas canvas, int r) {
+    private void drawOriginRight(Canvas canvas) {
         drawTextHor(canvas, mTextOriginColor, mTextStartX,
                 (int) (mTextStartX + (1 - mProgress) * mTextWidth));
     }
 
-    private void drawChangeTop(Canvas canvas, int r) {
+    private void drawChangeTop(Canvas canvas) {
         drawTextVer(canvas, mTextChangeColor, mTextStartY,
                 (int) (mTextStartY + mProgress * mTextHeight));
     }
 
-    private void drawOriginTop(Canvas canvas, int r) {
+    private void drawOriginTop(Canvas canvas) {
         drawTextVer(canvas, mTextOriginColor, (int) (mTextStartY + mProgress
                 * mTextHeight), mTextStartY + mTextHeight);
     }
 
-    private void drawChangeBottom(Canvas canvas, int t) {
+    private void drawChangeBottom(Canvas canvas) {
         drawTextVer(canvas, mTextChangeColor,
                 (int) (mTextStartY + (1 - mProgress) * mTextHeight),
                 mTextStartY + mTextHeight);
     }
 
-    private void drawOriginBottom(Canvas canvas, int t) {
+    private void drawOriginBottom(Canvas canvas) {
         drawTextVer(canvas, mTextOriginColor, mTextStartY,
                 (int) (mTextStartY + (1 - mProgress) * mTextHeight));
     }

@@ -182,6 +182,11 @@ public class CustomTabLayout extends TabLayout {
         }
     }
 
+    /**
+     * 滑动监听，核心逻辑
+     * 建议如果是activity退到后台，或者关闭页面，将listener给remove掉
+     * 采用弱引用方式防止监听listener内存泄漏，算是一个小的优化
+     */
     private static class OnPageChangeListener extends TabLayoutOnPageChangeListener {
 
         private final WeakReference<CustomTabLayout> mTabLayoutRef;
