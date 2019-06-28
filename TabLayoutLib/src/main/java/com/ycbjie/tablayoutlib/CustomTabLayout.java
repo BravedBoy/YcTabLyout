@@ -2,6 +2,7 @@ package com.ycbjie.tablayoutlib;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -9,6 +10,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -101,26 +105,36 @@ public class CustomTabLayout extends TabLayout {
     }
 
     private void setTabWidth(int position, CustomTabView customTabView) {
+        //获取TabLayout的子布局slidingTabStrip
         ViewGroup slidingTabStrip = (ViewGroup) getChildAt(0);
+        //获取选项卡tabView
         ViewGroup tabView = (ViewGroup) slidingTabStrip.getChildAt(position);
+        //设置属性为包裹
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        //获取宽高
         int w = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
         int h = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+        Log.d("yc-----setTabWidth--","宽---"+w+"高----"+h);
         //手动测量一下
         customTabView.measure(w, h);
         int measuredWidth = customTabView.getMeasuredWidth();
-        params.width = measuredWidth + tabView.getPaddingLeft() + tabView.getPaddingRight();
+        int paddingLeft = tabView.getPaddingLeft();
+        int paddingRight = tabView.getPaddingRight();
+        Log.d("yc-----padding--","paddingRight---"+paddingLeft+"paddingRight----"+paddingRight);
+        params.width = measuredWidth + paddingLeft + paddingRight;
+        Log.d("yc-----width--","宽---"+params.width);
         //设置tabView的宽度
         tabView.setLayoutParams(params);
     }
 
     /**
      * 设置每个Tab的左内边距和右内边距
-     *
+     * 暂时有点问题，设置为过时，建议使用
      * @param left                          左边距
      * @param right                         右边距
      */
+    @Deprecated
     public void setTabPaddingLeftAndRight(int left, int right) {
         try {
             Field mTabPaddingStartField = getTabPaddingStart();
@@ -155,7 +169,11 @@ public class CustomTabLayout extends TabLayout {
         }
     }
 
-
+    /**
+     * 滑动改变自定义tabView的颜色
+     * @param position                      索引
+     * @param positionOffset                偏移量
+     */
     private void tabScrolled(int position, float positionOffset) {
         if (positionOffset == 0.0F) {
             return;
@@ -275,6 +293,49 @@ public class CustomTabLayout extends TabLayout {
                 mLastSelectedTabPosition : selectedTabPositionAtParent;
     }
 
+
+    /**
+     * 通过反射设置TabLayout每一个的长度
+     * @param left                      左边 Margin 单位 dp
+     * @param right                     右边 Margin 单位 dp
+     */
+    public void setIndicator(int left, int right) {
+        Field tabStrip = null;
+        try {
+            tabStrip = getTabStrip();
+            tabStrip.setAccessible(true);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+
+        LinearLayout llTab = null;
+        try {
+            if (tabStrip != null) {
+                llTab = (LinearLayout) tabStrip.get(this);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        int l = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, left,
+                Resources.getSystem().getDisplayMetrics());
+        int r = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, right,
+                Resources.getSystem().getDisplayMetrics());
+
+        if (llTab != null) {
+            for (int i = 0; i < llTab.getChildCount(); i++) {
+                View child = llTab.getChildAt(i);
+                child.setPadding(0, 0, 0, 0);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+                params.leftMargin = l;
+                params.rightMargin = r;
+                child.setLayoutParams(params);
+                child.invalidate();
+            }
+        }
+    }
+
     /**
      * 反射获取私有的mPageChangeListener属性，考虑support 28以后变量名修改的问题
      * @return Field
@@ -328,7 +389,7 @@ public class CustomTabLayout extends TabLayout {
     }
 
     /**
-     * 反射获取私有的mTabPaddingEnd属性，考虑support 28以后变量名修改的问题
+     * 反射获取私有的mTabStrip属性，考虑support 28以后变量名修改的问题
      * @return Field
      * @throws NoSuchFieldException
      */

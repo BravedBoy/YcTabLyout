@@ -1,15 +1,24 @@
 package com.ycbjie.yctablyout;
 
+import android.content.res.Resources;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ycbjie.tablayoutlib.CustomTabLayout;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager vp5;
     private CustomTabLayout tab6;
     private ViewPager vp6;
+    private TabLayout tab7;
+    private ViewPager vp7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +54,15 @@ public class MainActivity extends AppCompatActivity {
         vp5 = findViewById(R.id.vp5);
         tab6 = findViewById(R.id.tab6);
         vp6 = findViewById(R.id.vp6);
+        tab7 = findViewById(R.id.tab7);
+        vp7 = findViewById(R.id.vp7);
         initFragmentList();
         initFragmentList2();
         initFragmentList3();
         initFragmentList4();
         initFragmentList5();
         initFragmentList6();
+        initFragmentList7();
     }
 
 
@@ -81,44 +95,10 @@ public class MainActivity extends AppCompatActivity {
         myAdapter.notifyDataSetChanged();
         tab.setupWithViewPager(vp);
         tab.setTabMode(TabLayout.MODE_SCROLLABLE);
-        //设置每个Tab的内边距
-        tab.setTabPaddingLeftAndRight(20, 20);
     }
 
 
     private void initFragmentList2() {
-        ArrayList<String> mTitleList = new ArrayList<>();
-        ArrayList<Fragment> mFragments = new ArrayList<>();
-        mTitleList.add("杨充");
-//        mTitleList.add("文学");
-        mTitleList.add("文化逗比");
-        mTitleList.add("生活励志哈");
-//        mTitleList.add("励志");
-        mFragments.add(MyFragment.newInstance("杨充"));
-//        mFragments.add(MyFragment.newInstance("文学"));
-        mFragments.add(MyFragment.newInstance("文化逗比"));
-        mFragments.add(MyFragment.newInstance("生活励志哈"));
-//        mFragments.add(MyFragment.newInstance("励志"));
-        /*
-         * 注意使用的是：getChildFragmentManager，
-         * 这样setOffscreenPageLimit()就可以添加上，保留相邻2个实例，切换时不会卡
-         * 但会内存溢出，在显示时加载数据
-         */
-        FragmentManager supportFragmentManager = getSupportFragmentManager();
-        BasePagerAdapter myAdapter = new BasePagerAdapter(supportFragmentManager,
-                mFragments, mTitleList);
-        vp2.setAdapter(myAdapter);
-        // 左右预加载页面的个数
-        vp2.setOffscreenPageLimit(5);
-        myAdapter.notifyDataSetChanged();
-        tab2.setTabMode(TabLayout.MODE_FIXED);
-        tab2.setupWithViewPager(vp2);
-        //设置每个Tab的内边距
-        //tab2.setTabPaddingLeftAndRight(20, 20);
-    }
-
-
-    private void initFragmentList3() {
         ArrayList<String> mTitleList = new ArrayList<>();
         ArrayList<Fragment> mFragments = new ArrayList<>();
         mTitleList.add("杨充");
@@ -131,11 +111,27 @@ public class MainActivity extends AppCompatActivity {
         mFragments.add(MyFragment.newInstance("小杨逗比"));
         mFragments.add(MyFragment.newInstance("生活励志哈"));
         mFragments.add(MyFragment.newInstance("励志"));
-        /*
-         * 注意使用的是：getChildFragmentManager，
-         * 这样setOffscreenPageLimit()就可以添加上，保留相邻2个实例，切换时不会卡
-         * 但会内存溢出，在显示时加载数据
-         */
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        BasePagerAdapter myAdapter = new BasePagerAdapter(supportFragmentManager,
+                mFragments, mTitleList);
+        vp2.setAdapter(myAdapter);
+        // 左右预加载页面的个数
+        vp2.setOffscreenPageLimit(5);
+        myAdapter.notifyDataSetChanged();
+        tab2.setTabMode(TabLayout.MODE_FIXED);
+        tab2.setupWithViewPager(vp2);
+    }
+
+
+    private void initFragmentList3() {
+        ArrayList<String> mTitleList = new ArrayList<>();
+        ArrayList<Fragment> mFragments = new ArrayList<>();
+        mTitleList.add("杨充");
+        mTitleList.add("文化逗比");
+        mTitleList.add("生活励志哈");
+        mFragments.add(MyFragment.newInstance("杨充"));
+        mFragments.add(MyFragment.newInstance("文化逗比"));
+        mFragments.add(MyFragment.newInstance("生活励志哈"));
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         BasePagerAdapter myAdapter = new BasePagerAdapter(supportFragmentManager,
                 mFragments, mTitleList);
@@ -146,27 +142,19 @@ public class MainActivity extends AppCompatActivity {
         tab3.setTabMode(TabLayout.GRAVITY_CENTER);
         tab3.setupWithViewPager(vp3);
         //设置每个Tab的内边距
-        //tab2.setTabPaddingLeftAndRight(20, 20);
+        tab3.setTabPaddingLeftAndRight(10, 10);
     }
+
 
     private void initFragmentList4() {
         ArrayList<String> mTitleList = new ArrayList<>();
         ArrayList<Fragment> mFragments = new ArrayList<>();
         mTitleList.add("综合");
-//        mTitleList.add("文学");
         mTitleList.add("文化逗比");
         mTitleList.add("生活励志哈");
-//        mTitleList.add("励志");
         mFragments.add(MyFragment.newInstance("综合"));
-//        mFragments.add(MyFragment.newInstance("文学"));
         mFragments.add(MyFragment.newInstance("文化逗比"));
         mFragments.add(MyFragment.newInstance("生活励志哈"));
-//        mFragments.add(MyFragment.newInstance("励志"));
-        /*
-         * 注意使用的是：getChildFragmentManager，
-         * 这样setOffscreenPageLimit()就可以添加上，保留相邻2个实例，切换时不会卡
-         * 但会内存溢出，在显示时加载数据
-         */
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         BasePagerAdapter myAdapter = new BasePagerAdapter(supportFragmentManager,
                 mFragments, mTitleList);
@@ -177,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         tab4.setTabMode(TabLayout.MODE_SCROLLABLE);
         tab4.setupWithViewPager(vp4);
         //设置每个Tab的内边距
-        //tab2.setTabPaddingLeftAndRight(20, 20);
+        tab4.setIndicator(10,10);
     }
 
     private void initFragmentList5() {
@@ -232,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
         mFragments.add(MyFragment.newInstance("傻子"));
         mFragments.add(MyFragment.newInstance("孔乙己逗比"));
         FragmentManager supportFragmentManager = getSupportFragmentManager();
-        BasePagerAdapter myAdapter = new BasePagerAdapter(supportFragmentManager,
+        PagerAdapter myAdapter = new PagerAdapter(supportFragmentManager,
                 mFragments, mTitleList);
         vp6.setAdapter(myAdapter);
         // 左右预加载页面的个数
@@ -242,6 +230,141 @@ public class MainActivity extends AppCompatActivity {
         tab6.setupWithViewPager(vp6);
     }
 
+
+
+    private void initFragmentList7() {
+        ArrayList<String> mTitleList = new ArrayList<>();
+        ArrayList<Fragment> mFragments = new ArrayList<>();
+        mTitleList.add("杨充");
+        mTitleList.add("文学");
+        mTitleList.add("小杨逗比");
+        mTitleList.add("生活励志哈");
+        mTitleList.add("励志");
+        mTitleList.add("潇湘剑雨");
+        mTitleList.add("傻子");
+        mTitleList.add("孔乙己逗比");
+        mFragments.add(MyFragment.newInstance("杨充"));
+        mFragments.add(MyFragment.newInstance("文学"));
+        mFragments.add(MyFragment.newInstance("小杨逗比"));
+        mFragments.add(MyFragment.newInstance("生活励志哈"));
+        mFragments.add(MyFragment.newInstance("励志"));
+        mFragments.add(MyFragment.newInstance("潇湘剑雨"));
+        mFragments.add(MyFragment.newInstance("傻子"));
+        mFragments.add(MyFragment.newInstance("孔乙己逗比"));
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        BasePagerAdapter myAdapter = new BasePagerAdapter(supportFragmentManager,
+                mFragments, mTitleList);
+        vp7.setAdapter(myAdapter);
+        // 左右预加载页面的个数
+        vp7.setOffscreenPageLimit(5);
+        myAdapter.notifyDataSetChanged();
+        tab7.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tab7.setupWithViewPager(vp7);
+        //setIndicator(tab7,10,10);
+    }
+
+
+    public class PagerAdapter extends FragmentPagerAdapter {
+
+        private List<?> mFragment;
+        private List<String> mTitleList;
+        /**
+         * 接收首页传递的标题
+         */
+        public PagerAdapter(FragmentManager fm, List<?> mFragment, List<String> mTitleList) {
+            super(fm);
+            this.mFragment = mFragment;
+            this.mTitleList = mTitleList;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return (Fragment) mFragment.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragment==null ? 0 : mFragment.size();
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            super.destroyItem(container, position, object);
+        }
+
+        /**
+         * 首页显示title，每日推荐等..
+         * 若有问题，移到对应单独页面
+         */
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if (mTitleList != null) {
+                return mTitleList.get(position);
+            } else {
+                return "";
+            }
+        }
+    }
+
+
+    /**
+     * 通过反射设置TabLayout每一个的长度
+     * @param left                      左边 Padding 单位 dp
+     * @param right                     右边 Padding 单位 dp
+     */
+    public void setIndicator(TabLayout tabLayout, int left, int right) {
+        Field tabStrip = null;
+        try {
+            tabStrip = getTabStrip();
+            tabStrip.setAccessible(true);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+
+        LinearLayout llTab = null;
+        try {
+            if (tabStrip != null) {
+                llTab = (LinearLayout) tabStrip.get(tabLayout);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        int l = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, left,
+                Resources.getSystem().getDisplayMetrics());
+        int r = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, right,
+                Resources.getSystem().getDisplayMetrics());
+
+        if (llTab != null) {
+            for (int i = 0; i < llTab.getChildCount(); i++) {
+                View child = llTab.getChildAt(i);
+                child.setPadding(0, 0, 0, 0);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+                params.leftMargin = l;
+                params.rightMargin = r;
+                child.setLayoutParams(params);
+                child.invalidate();
+            }
+        }
+    }
+
+    /**
+     * 反射获取私有的mTabStrip属性，考虑support 28以后变量名修改的问题
+     * @return Field
+     * @throws NoSuchFieldException
+     */
+    private Field getTabStrip() throws NoSuchFieldException {
+        Class clazz = TabLayout.class;
+        try {
+            // support design 27及一下版本
+            return clazz.getDeclaredField("mTabStrip");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+            // 可能是28及以上版本
+            return clazz.getDeclaredField("slidingTabIndicator");
+        }
+    }
 
 
 }
