@@ -1,5 +1,6 @@
 package com.ycbjie.tablayoutlib;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -38,18 +39,20 @@ public class CustomTabLayout extends TabLayout {
         this(context, attrs, 0);
     }
 
+    @SuppressLint("PrivateResource")
     public CustomTabLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         if (attrs != null) {
+            @SuppressLint("CustomViewStyleable")
             TypedArray a = context.obtainStyledAttributes(attrs,
                     android.support.design.R.styleable.TabLayout,
                     defStyleAttr, android.support.design.R.style.Widget_Design_TabLayout);
             try {
+                @SuppressLint("PrivateResource")
                 int tabTextAppearance = a.getResourceId(
                         android.support.design.R.styleable.TabLayout_tabTextAppearance,
                         android.support.design.R.style.TextAppearance_Design_Tab);
-
-                // Text colors/sizes come from the text appearance first
+                @SuppressLint("CustomViewStyleable")
                 final TypedArray ta = context.obtainStyledAttributes(tabTextAppearance,
                         android.support.v7.appcompat.R.styleable.TextAppearance);
                 try {
@@ -64,11 +67,9 @@ public class CustomTabLayout extends TabLayout {
                 } finally {
                     ta.recycle();
                 }
-
                 //Tab文字选中颜色
                 mTabSelectedTextColor = a.getColor(
                         android.support.design.R.styleable.TabLayout_tabSelectedTextColor, Color.BLACK);
-
             } finally {
                 a.recycle();
             }

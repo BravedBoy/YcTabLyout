@@ -21,6 +21,10 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager vp3;
     private CustomTabLayout tab4;
     private ViewPager vp4;
+    private CustomTabLayout tab5;
+    private ViewPager vp5;
+    private CustomTabLayout tab6;
+    private ViewPager vp6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +39,16 @@ public class MainActivity extends AppCompatActivity {
         vp3 = findViewById(R.id.vp3);
         tab4 = findViewById(R.id.tab4);
         vp4 = findViewById(R.id.vp4);
+        tab5 = findViewById(R.id.tab5);
+        vp5 = findViewById(R.id.vp5);
+        tab6 = findViewById(R.id.tab6);
+        vp6 = findViewById(R.id.vp6);
         initFragmentList();
         initFragmentList2();
         initFragmentList3();
         initFragmentList4();
+        initFragmentList5();
+        initFragmentList6();
     }
 
 
@@ -169,6 +179,69 @@ public class MainActivity extends AppCompatActivity {
         //设置每个Tab的内边距
         //tab2.setTabPaddingLeftAndRight(20, 20);
     }
+
+    private void initFragmentList5() {
+        ArrayList<String> mTitleList = new ArrayList<>();
+        ArrayList<Fragment> mFragments = new ArrayList<>();
+        mTitleList.add("杨充");
+        mTitleList.add("文学");
+        mTitleList.add("小杨逗比");
+        mTitleList.add("生活励志哈");
+        mTitleList.add("励志");
+        mTitleList.add("潇湘剑雨");
+        mTitleList.add("傻子");
+        mTitleList.add("孔乙己逗比");
+        mFragments.add(MyFragment.newInstance("杨充"));
+        mFragments.add(MyFragment.newInstance("文学"));
+        mFragments.add(MyFragment.newInstance("小杨逗比"));
+        mFragments.add(MyFragment.newInstance("生活励志哈"));
+        mFragments.add(MyFragment.newInstance("励志"));
+        mFragments.add(MyFragment.newInstance("潇湘剑雨"));
+        mFragments.add(MyFragment.newInstance("傻子"));
+        mFragments.add(MyFragment.newInstance("孔乙己逗比"));
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        BasePagerAdapter myAdapter = new BasePagerAdapter(supportFragmentManager,
+                mFragments, mTitleList);
+        vp5.setAdapter(myAdapter);
+        // 左右预加载页面的个数
+        vp5.setOffscreenPageLimit(5);
+        myAdapter.notifyDataSetChanged();
+        tab5.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tab5.setupWithViewPager(vp5);
+    }
+
+
+
+    private void initFragmentList6() {
+        ArrayList<String> mTitleList = new ArrayList<>();
+        ArrayList<Fragment> mFragments = new ArrayList<>();
+        mTitleList.add("杨充");
+        mTitleList.add("文学");
+        mTitleList.add("小杨逗比");
+        mTitleList.add("生活励志哈");
+        mTitleList.add("励志");
+        mTitleList.add("潇湘剑雨");
+        mTitleList.add("傻子");
+        mTitleList.add("孔乙己逗比");
+        mFragments.add(MyFragment.newInstance("杨充"));
+        mFragments.add(MyFragment.newInstance("文学"));
+        mFragments.add(MyFragment.newInstance("小杨逗比"));
+        mFragments.add(MyFragment.newInstance("生活励志哈"));
+        mFragments.add(MyFragment.newInstance("励志"));
+        mFragments.add(MyFragment.newInstance("潇湘剑雨"));
+        mFragments.add(MyFragment.newInstance("傻子"));
+        mFragments.add(MyFragment.newInstance("孔乙己逗比"));
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        BasePagerAdapter myAdapter = new BasePagerAdapter(supportFragmentManager,
+                mFragments, mTitleList);
+        vp6.setAdapter(myAdapter);
+        // 左右预加载页面的个数
+        vp6.setOffscreenPageLimit(5);
+        myAdapter.notifyDataSetChanged();
+        tab6.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tab6.setupWithViewPager(vp6);
+    }
+
 
 
 }
