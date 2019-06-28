@@ -17,6 +17,10 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager vp;
     private CustomTabLayout tab2;
     private ViewPager vp2;
+    private CustomTabLayout tab3;
+    private ViewPager vp3;
+    private CustomTabLayout tab4;
+    private ViewPager vp4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,27 +31,32 @@ public class MainActivity extends AppCompatActivity {
         vp = findViewById(R.id.vp);
         tab2 = findViewById(R.id.tab2);
         vp2 = findViewById(R.id.vp2);
+        tab3 = findViewById(R.id.tab3);
+        vp3 = findViewById(R.id.vp3);
+        tab4 = findViewById(R.id.tab4);
+        vp4 = findViewById(R.id.vp4);
         initFragmentList();
         initFragmentList2();
+        initFragmentList3();
+        initFragmentList4();
     }
 
 
     private void initFragmentList() {
         ArrayList<String> mTitleList = new ArrayList<>();
         ArrayList<Fragment> mFragments = new ArrayList<>();
-        mTitleList.add("综合");
+        mTitleList.add("杨充");
         mTitleList.add("文学");
         mTitleList.add("文化逗比");
         mTitleList.add("生活励志哈");
         mTitleList.add("励志");
         mTitleList.add("小杨逗比");
-        mFragments.add(MyFragment.newInstance("综合"));
+        mFragments.add(MyFragment.newInstance("杨充"));
         mFragments.add(MyFragment.newInstance("文学"));
         mFragments.add(MyFragment.newInstance("文化逗比"));
         mFragments.add(MyFragment.newInstance("生活励志哈"));
         mFragments.add(MyFragment.newInstance("励志"));
         mFragments.add(MyFragment.newInstance("小杨逗比"));
-
         /*
          * 注意使用的是：getChildFragmentManager，
          * 这样setOffscreenPageLimit()就可以添加上，保留相邻2个实例，切换时不会卡
@@ -70,16 +79,16 @@ public class MainActivity extends AppCompatActivity {
     private void initFragmentList2() {
         ArrayList<String> mTitleList = new ArrayList<>();
         ArrayList<Fragment> mFragments = new ArrayList<>();
-        mTitleList.add("综合");
-        mTitleList.add("文学");
+        mTitleList.add("杨充");
+//        mTitleList.add("文学");
         mTitleList.add("文化逗比");
         mTitleList.add("生活励志哈");
-        mTitleList.add("励志");
-        mFragments.add(MyFragment.newInstance("综合"));
-        mFragments.add(MyFragment.newInstance("文学"));
+//        mTitleList.add("励志");
+        mFragments.add(MyFragment.newInstance("杨充"));
+//        mFragments.add(MyFragment.newInstance("文学"));
         mFragments.add(MyFragment.newInstance("文化逗比"));
         mFragments.add(MyFragment.newInstance("生活励志哈"));
-        mFragments.add(MyFragment.newInstance("励志"));
+//        mFragments.add(MyFragment.newInstance("励志"));
         /*
          * 注意使用的是：getChildFragmentManager，
          * 这样setOffscreenPageLimit()就可以添加上，保留相邻2个实例，切换时不会卡
@@ -95,9 +104,71 @@ public class MainActivity extends AppCompatActivity {
         tab2.setTabMode(TabLayout.MODE_FIXED);
         tab2.setupWithViewPager(vp2);
         //设置每个Tab的内边距
-        tab2.setTabPaddingLeftAndRight(20, 20);
+        //tab2.setTabPaddingLeftAndRight(20, 20);
     }
 
+
+    private void initFragmentList3() {
+        ArrayList<String> mTitleList = new ArrayList<>();
+        ArrayList<Fragment> mFragments = new ArrayList<>();
+        mTitleList.add("杨充");
+        mTitleList.add("文学");
+        mTitleList.add("小杨逗比");
+        mTitleList.add("生活励志哈");
+        mTitleList.add("励志");
+        mFragments.add(MyFragment.newInstance("杨充"));
+        mFragments.add(MyFragment.newInstance("文学"));
+        mFragments.add(MyFragment.newInstance("小杨逗比"));
+        mFragments.add(MyFragment.newInstance("生活励志哈"));
+        mFragments.add(MyFragment.newInstance("励志"));
+        /*
+         * 注意使用的是：getChildFragmentManager，
+         * 这样setOffscreenPageLimit()就可以添加上，保留相邻2个实例，切换时不会卡
+         * 但会内存溢出，在显示时加载数据
+         */
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        BasePagerAdapter myAdapter = new BasePagerAdapter(supportFragmentManager,
+                mFragments, mTitleList);
+        vp3.setAdapter(myAdapter);
+        // 左右预加载页面的个数
+        vp3.setOffscreenPageLimit(5);
+        myAdapter.notifyDataSetChanged();
+        tab3.setTabMode(TabLayout.GRAVITY_CENTER);
+        tab3.setupWithViewPager(vp3);
+        //设置每个Tab的内边距
+        //tab2.setTabPaddingLeftAndRight(20, 20);
+    }
+
+    private void initFragmentList4() {
+        ArrayList<String> mTitleList = new ArrayList<>();
+        ArrayList<Fragment> mFragments = new ArrayList<>();
+        mTitleList.add("综合");
+//        mTitleList.add("文学");
+        mTitleList.add("文化逗比");
+        mTitleList.add("生活励志哈");
+//        mTitleList.add("励志");
+        mFragments.add(MyFragment.newInstance("综合"));
+//        mFragments.add(MyFragment.newInstance("文学"));
+        mFragments.add(MyFragment.newInstance("文化逗比"));
+        mFragments.add(MyFragment.newInstance("生活励志哈"));
+//        mFragments.add(MyFragment.newInstance("励志"));
+        /*
+         * 注意使用的是：getChildFragmentManager，
+         * 这样setOffscreenPageLimit()就可以添加上，保留相邻2个实例，切换时不会卡
+         * 但会内存溢出，在显示时加载数据
+         */
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        BasePagerAdapter myAdapter = new BasePagerAdapter(supportFragmentManager,
+                mFragments, mTitleList);
+        vp4.setAdapter(myAdapter);
+        // 左右预加载页面的个数
+        vp4.setOffscreenPageLimit(5);
+        myAdapter.notifyDataSetChanged();
+        tab4.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tab4.setupWithViewPager(vp4);
+        //设置每个Tab的内边距
+        //tab2.setTabPaddingLeftAndRight(20, 20);
+    }
 
 
 }

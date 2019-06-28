@@ -27,7 +27,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/vp"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="50dp"
             android:background="@color/colorPrimary"/>
 
 
@@ -44,7 +44,40 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/vp2"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary"/>
+
+
+        <com.ycbjie.tablayoutlib.CustomTabLayout
+            android:id="@+id/tab3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorColor="@color/red"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/red"
+            app:tabTextColor="@color/black"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary"/>
+
+        <com.ycbjie.tablayoutlib.CustomTabLayout
+            android:id="@+id/tab4"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorColor="@color/red"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/red"
+            app:tabTextColor="@color/black"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp4"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:background="@color/colorPrimary"/>
 
     </LinearLayout>

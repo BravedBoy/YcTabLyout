@@ -198,12 +198,22 @@ public class CustomTabLayout extends TabLayout {
             mTabLayoutRef = new WeakReference<>((CustomTabLayout) tabLayout);
         }
 
+        /**
+         * 这个方法是滚动状态发生变化是调用
+         * @param state                     桩体
+         */
         @Override
         public void onPageScrollStateChanged(final int state) {
             mPreviousScrollState = mScrollState;
             mScrollState = state;
         }
 
+        /**
+         * 正在滚动时调用
+         * @param position                  索引
+         * @param positionOffset            offset偏移
+         * @param positionOffsetPixels      offsetPixels
+         */
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels);
@@ -218,6 +228,10 @@ public class CustomTabLayout extends TabLayout {
             }
         }
 
+        /**
+         * 选中时调用
+         * @param position                      索引
+         */
         @Override
         public void onPageSelected(int position) {
             super.onPageSelected(position);
@@ -226,10 +240,12 @@ public class CustomTabLayout extends TabLayout {
             tabLayout.setSelectedView(position);
         }
 
+        /**
+         * 重置状态
+         */
         void reset() {
             mPreviousScrollState = mScrollState = SCROLL_STATE_IDLE;
         }
-
     }
 
 
