@@ -142,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
         tab3.setTabMode(TabLayout.GRAVITY_CENTER);
         tab3.setupWithViewPager(vp3);
         //设置每个Tab的内边距
-        tab3.setTabPaddingLeftAndRight(10, 10);
     }
 
 
@@ -260,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
         myAdapter.notifyDataSetChanged();
         tab7.setTabMode(TabLayout.MODE_SCROLLABLE);
         tab7.setupWithViewPager(vp7);
-        //setIndicator(tab7,10,10);
+        setTabWidth(tab7);
     }
 
 
@@ -306,65 +305,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    /**
-     * 通过反射设置TabLayout每一个的长度
-     * @param left                      左边 Padding 单位 dp
-     * @param right                     右边 Padding 单位 dp
-     */
-    public void setIndicator(TabLayout tabLayout, int left, int right) {
-        Field tabStrip = null;
-        try {
-            tabStrip = getTabStrip();
-            tabStrip.setAccessible(true);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-
-        LinearLayout llTab = null;
-        try {
-            if (tabStrip != null) {
-                llTab = (LinearLayout) tabStrip.get(tabLayout);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        int l = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, left,
-                Resources.getSystem().getDisplayMetrics());
-        int r = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, right,
-                Resources.getSystem().getDisplayMetrics());
-
-        if (llTab != null) {
-            for (int i = 0; i < llTab.getChildCount(); i++) {
-                View child = llTab.getChildAt(i);
-                child.setPadding(0, 0, 0, 0);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-                params.leftMargin = l;
-                params.rightMargin = r;
-                child.setLayoutParams(params);
-                child.invalidate();
-            }
+    public void setTabWidth(TabLayout tabLayout){
+        //拿到slidingTabIndicator的布局
+        LinearLayout mTabStrip = (LinearLayout) tabLayout.getChildAt(0);
+        //遍历SlidingTabStrip的所有TabView子view
+        for (int i = 0; i < mTabStrip.getChildCount(); i++) {
+            View tabView = mTabStrip.getChildAt(i);
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)tabView.getLayoutParams();
+            //给TabView设置leftMargin和rightMargin
+            params.leftMargin = dp2px(10);
+            params.rightMargin = dp2px(10);
+            tabView.setLayoutParams(params);
+            //触发绘制
+            tabView.invalidate();
         }
     }
 
-    /**
-     * 反射获取私有的mTabStrip属性，考虑support 28以后变量名修改的问题
-     * @return Field
-     * @throws NoSuchFieldException
-     */
-    private Field getTabStrip() throws NoSuchFieldException {
-        Class clazz = TabLayout.class;
-        try {
-            // support design 27及一下版本
-            return clazz.getDeclaredField("mTabStrip");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-            // 可能是28及以上版本
-            return clazz.getDeclaredField("slidingTabIndicator");
-        }
+    private int dp2px(float dpVal) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                dpVal, getResources().getDisplayMetrics());
     }
 
+    private int sp2px(float dpVal) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+                dpVal, getResources().getDisplayMetrics());
+    }
 
 }
