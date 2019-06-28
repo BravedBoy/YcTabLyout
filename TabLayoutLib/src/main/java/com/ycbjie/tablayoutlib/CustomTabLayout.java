@@ -169,6 +169,7 @@ public class CustomTabLayout extends TabLayout {
         }
     }
 
+
     /**
      * 滑动改变自定义tabView的颜色
      * @param position                      索引
@@ -178,7 +179,9 @@ public class CustomTabLayout extends TabLayout {
         if (positionOffset == 0.0F) {
             return;
         }
+        //当前tabView
         CustomTabView currentTrackView = getCustomTabView(position);
+        //下一个tabView
         CustomTabView nextTrackView = getCustomTabView(position + 1);
         if (currentTrackView != null) {
             currentTrackView.setDirection(1);
@@ -200,6 +203,7 @@ public class CustomTabLayout extends TabLayout {
             return null;
         }
     }
+
 
     /**
      * 滑动监听，核心逻辑
@@ -293,28 +297,6 @@ public class CustomTabLayout extends TabLayout {
                 mLastSelectedTabPosition : selectedTabPositionAtParent;
     }
 
-    /**
-     * 设置指示器的宽度是否和选项卡内容宽度一样
-     * @param isFullWidth                       布尔值
-     */
-    public void setIndicatorFullWidth(boolean isFullWidth){
-        Field tabStrip = null;
-        try {
-            tabStrip = getTabStrip();
-            tabStrip.setAccessible(true);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-
-        LinearLayout llTab = null;
-        try {
-            if (tabStrip != null) {
-                llTab = (LinearLayout) tabStrip.get(this);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * 通过反射设置TabLayout每一个的长度

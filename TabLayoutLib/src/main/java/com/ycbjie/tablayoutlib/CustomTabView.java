@@ -52,8 +52,7 @@ public class CustomTabView extends View {
         if (state instanceof Bundle) {
             Bundle bundle = (Bundle) state;
             mProgress = bundle.getFloat(KEY_STATE_PROGRESS);
-            super.onRestoreInstanceState(bundle
-                    .getParcelable(KEY_DEFAULT_STATE));
+            super.onRestoreInstanceState(bundle.getParcelable(KEY_DEFAULT_STATE));
             return;
         }
         super.onRestoreInstanceState(state);
@@ -153,12 +152,19 @@ public class CustomTabView extends View {
         } else if (mDirection == DIRECTION_TOP) {
             drawOriginTop(canvas);
             drawChangeTop(canvas);
-        } else {
+        } else if (mDirection == DIRECTION_BOTTOM){
             drawOriginBottom(canvas);
             drawChangeBottom(canvas);
         }
     }
 
+    /**
+     * 横向
+     * @param canvas                    画板
+     * @param color                     颜色
+     * @param startX                    开始x
+     * @param endX                      结束x
+     */
     private void drawTextHor(Canvas canvas, int color, int startX, int endX) {
         mPaint.setColor(color);
         if (debug) {
@@ -173,6 +179,14 @@ public class CustomTabView extends View {
         canvas.restore();
     }
 
+
+    /**
+     * 横向
+     * @param canvas                    画板
+     * @param color                     颜色
+     * @param startY                    开始y
+     * @param endY                      结束y
+     */
     private void drawTextVer(Canvas canvas, int color, int startY, int endY) {
         mPaint.setColor(color);
         if (debug) {
@@ -263,11 +277,6 @@ public class CustomTabView extends View {
     public void setTextChangeColor(int mTextChangeColor) {
         this.mTextChangeColor = mTextChangeColor;
         invalidate();
-    }
-
-    private int dp2px(float dpVal) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                dpVal, getResources().getDisplayMetrics());
     }
 
     private int sp2px(float dpVal) {

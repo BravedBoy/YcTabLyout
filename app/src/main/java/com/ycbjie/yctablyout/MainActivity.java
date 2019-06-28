@@ -167,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
         tab4.setIndicator(10,10);
     }
 
+
     private void initFragmentList5() {
         ArrayList<String> mTitleList = new ArrayList<>();
         ArrayList<Fragment> mFragments = new ArrayList<>();
